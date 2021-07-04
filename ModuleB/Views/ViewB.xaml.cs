@@ -1,5 +1,6 @@
 ﻿
 using Biblioteca.WPF.Models;
+using ModuleB.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,20 +15,20 @@ namespace ModuleB.Views
         public ViewB()
         {
             InitializeComponent();
-           
+            DataContext = new ViewBViewModel();
         }
-        BookModel bookToEdit = new BookModel();
-        public void EditBook(object s, RoutedEventArgs e)
-        {
-            try
-            {
-                bookToEdit = (s as FrameworkElement).DataContext as BookModel;
-                UpdateBookGrid.DataContext = bookToEdit;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: '{ex}'");
-            }
-        }
+       
+        //public void EditBook(object s, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        bookToEdit = (s as FrameworkElement).DataContext as BookModel;
+        //        UpdateBookGrid.DataContext = bookToEdit;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error: '{ex}'");
+        //    }
+        //}
     }
 }

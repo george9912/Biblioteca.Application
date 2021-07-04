@@ -76,7 +76,7 @@ namespace Biblioteca.Services.Services.BookService
         {
             try
             {
-                var client = bookRepository.GetById(bookId);
+                var client = bookRepository.Table.FirstOrDefault(x => x.Id == bookId);
                 if (client == null)
                 {
                     throw new ArgumentException("Client ID is not found!");

@@ -4,7 +4,8 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
              Background="Azure"
-             MinHeight="500" MinWidth="800">
+             MinHeight="500" MinWidth="800"
+             x:Name="_usercontrol">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -15,7 +16,8 @@
 
         <Label Grid.Row="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Books management"/>
 
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False" Margin="5" Name="Books" IsReadOnly="True"
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" Margin="5" Name="BooksDataGrid" IsReadOnly="True"
+                  SelectedItem="{Binding Path=SelectedBookGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding Path=BooksModel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
@@ -26,7 +28,8 @@
                 <DataGridTemplateColumn Header="Update Book">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Edit" />
+                            <Button Content="Edit" Command="{Binding DataContext.EditBookCommand, ElementName=_usercontrol}"
+                                                             CommandParameter="{Binding}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -34,7 +37,8 @@
                 <DataGridTemplateColumn Header="Delete Book">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Delete" />
+                            <Button Content="Delete" Command="{Binding DataContext.DeleteBookCommand, ElementName=_usercontrol}"
+                                                             CommandParameter="{Binding}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -121,7 +125,7 @@
                         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Year}"/>
 
                         <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Update" Margin="5"
-                                 Command="{Binding UpdateBookCommand}"/>
+                                 Command="{Binding UpdateBookCommand}" />
 
                     </Grid>
 
