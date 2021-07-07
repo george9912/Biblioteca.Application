@@ -10,8 +10,8 @@ namespace Biblioteca.Services.Models
         public Guid BookId { get; set; }
         public DateTime LoanDate { get; set; }
         public DateTime? ReturnDate { get; set; }
+        public string BookName { get; set; }
+        public string ClientName { get; set; }
 
-        public virtual BookModel Book { get; set; }
-        public virtual ClientModel Client { get; set; }
     }
 }

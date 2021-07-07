@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModuleB.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace ModuleB.Views
         public ViewC()
         {
             InitializeComponent();
+            DataContext = new ViewCViewModel();
         }
     }
 }

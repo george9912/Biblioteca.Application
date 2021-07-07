@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Biblioteca.Core.Exceptions
 {
     [Serializable]
-    public class ItemCannotBeInsertedException : DBLanguagesApplicationException
+    public class ItemCannotBeInsertedException : BibliotecaApplicationException
     {
         public ItemCannotBeInsertedException(string message) : base(message)
         {

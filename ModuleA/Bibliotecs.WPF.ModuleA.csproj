@@ -5,11 +5,23 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\adminIcon.jpg" />
+    <None Remove="Views\Background.jpeg" />
+    <None Remove="Views\BackgroundModified.jpeg" />
+    <None Remove="Views\customerIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Biblioteca.WPF.API.Client\Biblioteca.WPF.API.Client.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\adminIcon.jpg" />
+    <Resource Include="Views\Background.jpeg" />
+    <Resource Include="Views\BackgroundModified.jpeg" />
+    <Resource Include="Views\customerIcon.png" />
   </ItemGroup>
 </Project>

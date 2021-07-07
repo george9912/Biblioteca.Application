@@ -3,14 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="600" Width="1000">
+        Title="{Binding Title}" Height="620" Width="1000">
+    <Window.Background>
+        <ImageBrush ImageSource="/Views/BackgroundWithBoard.jpeg"/>
+    </Window.Background>
     <DockPanel LastChildFill="True">
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="5" >
-            <Button Command="{Binding NavigateCommand}" CommandParameter="ViewA" Margin="5">Navigate to View A</Button>
-            <Button Command="{Binding NavigateCommand}" CommandParameter="ViewB" Margin="5">Navigate to View B</Button>
-            <Button Command="{Binding NavigateCommand}" CommandParameter="ViewC" Margin="5">Navigate to View C</Button>
-            <Button Command="{Binding NavigateCommand}" CommandParameter="ViewD" Margin="5">Navigate to View D</Button>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="5"  >
+            <Button Command="{Binding NavigateCommand}" CommandParameter="ViewA" Margin="5" Height="30" Width="90" FontFamily="Freestyle Script" FontSize="25" Background="White" Foreground="Sienna">Home Page</Button>
+            <Button IsEnabled="{Binding IsEnabledBooks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding NavigateCommand}" CommandParameter="ViewB" Margin="5" Height="30" Width="135" FontFamily="Freestyle Script" FontSize="25" Background="White" Foreground="Sienna">Books management</Button>
+            <Button IsEnabled="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding NavigateCommand}" CommandParameter="ViewC" Margin="5" Height="30" MinWidth="140" FontFamily="Freestyle Script" FontSize="25" Background="White" Foreground="Sienna">Clients management</Button>
+            <Button IsEnabled="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding NavigateCommand}" CommandParameter="ViewD" Margin="5" Height="30" MinWidth="135" FontFamily="Freestyle Script" FontSize="25" Background="White" Foreground="Sienna">Loans management</Button>
         </StackPanel>
+       
+
         <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="5"  />
     </DockPanel>
 </Window>

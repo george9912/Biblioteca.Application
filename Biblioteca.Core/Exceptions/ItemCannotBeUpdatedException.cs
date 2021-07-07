@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Biblioteca.Core.Exceptions
 {
     [Serializable]
-    public class ItemCannotBeUpdatedException : DBLanguagesApplicationException
+    public class ItemCannotBeUpdatedException : BibliotecaApplicationException
     {
         public ItemCannotBeUpdatedException(string message) : base(message)
         {

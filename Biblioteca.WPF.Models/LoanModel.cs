@@ -8,7 +8,38 @@ namespace Biblioteca.WPF.Models
         private Guid bookId;
         private DateTime loanDate;
         private DateTime returnDate;
-
+        private string clientName;
+        private string bookName;
+        public string ClientName
+        {
+            get
+            {
+                return clientName;
+            }
+            set
+            {
+                if (clientName != value)
+                {
+                    clientName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        public string BookName
+        {
+            get
+            {
+                return bookName;
+            }
+            set
+            {
+                if (bookName != value)
+                {
+                    bookName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
         public Guid ClientId
         {
             get

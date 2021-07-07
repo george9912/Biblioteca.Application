@@ -4,6 +4,7 @@ using ModuleB.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ModuleB.Views
 {
@@ -17,18 +18,7 @@ namespace ModuleB.Views
             InitializeComponent();
             DataContext = new ViewBViewModel();
         }
-       
-        //public void EditBook(object s, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        bookToEdit = (s as FrameworkElement).DataContext as BookModel;
-        //        UpdateBookGrid.DataContext = bookToEdit;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Error: '{ex}'");
-        //    }
-        //}
+
+    
     }
 }

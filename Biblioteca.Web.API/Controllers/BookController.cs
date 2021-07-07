@@ -28,7 +28,7 @@ namespace Biblioteca.Web.API.Controllers
         }
 
         [Route("api/Books/{bookId}")]
-        [HttpPut]
+        [HttpGet]
         public BookModel GetCustomerById([FromRoute] Guid bookId)
         {
             return bookService.GetBookByID(bookId);

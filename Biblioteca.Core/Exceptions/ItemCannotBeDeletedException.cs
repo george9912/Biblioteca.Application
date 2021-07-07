@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Biblioteca.Core.Exceptions
 {
     [Serializable]
-    public class ItemCannotBeDeletedException : DBLanguagesApplicationException
+    public class ItemCannotBeDeletedException : BibliotecaApplicationException
     {
         public ItemCannotBeDeletedException(string message) : base(message)
         {

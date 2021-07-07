@@ -14,9 +14,43 @@ namespace ModuleB.ViewModels
     {
         private ObservableCollection<BookModel> booksModel = new ObservableCollection<BookModel>();
 
+        private BookModel bookPropToUpdate;
+        public BookModel BookPropToUpdate
+        {
+            get
+            {
+                return bookPropToUpdate;
+            }
+            set
+            {
+                if(value!= bookPropToUpdate)
+                {
+                    bookPropToUpdate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private BookModel bookPropToAdd;
+        public BookModel BookPropToAdd
+        {
+            get
+            {
+                return bookPropToAdd;
+            }
+            set
+            {
+                if (value != bookPropToAdd)
+                {
+                    bookPropToAdd = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public ViewBViewModel()
         {
-            //BookModel properties = new BookModel();
+            bookPropToUpdate = new BookModel();
+            bookPropToAdd = new BookModel();
         }
 
         public DelegateCommand GetBooks
@@ -97,90 +131,6 @@ namespace ModuleB.ViewModels
             }
         }
 
-        //BookModel properties - since it doesn t recognise them from the BookModel I had to create them also here
-        private string title;
-        private string author;
-        private string publisher;
-        private int year;
-        private Guid id;
-        public Guid Id
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                if (id != value)
-                {
-                    id = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-            set
-            {
-                if (title != value)
-                {
-                    title = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public string Author
-        {
-            get
-            {
-                return author;
-            }
-            set
-            {
-                if (author != value)
-                {
-                    author = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        public string Publisher
-        {
-            get
-            {
-                return publisher;
-            }
-            set
-            {
-                if (publisher != value)
-                {
-                    publisher = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        public int Year
-        {
-            get
-            {
-                return year;
-            }
-            set
-            {
-                if (year != value)
-                {
-                    year = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         //Add method
         public async void AddBookAction()
         {
@@ -188,10 +138,10 @@ namespace ModuleB.ViewModels
             {
                 BookModel newBookModel = new BookModel()
                 {
-                    Title = Title,
-                    Author = Author,
-                    Publisher = Publisher,
-                    Year = Year
+                    Title = BookPropToAdd.Title,
+                    Author = BookPropToAdd.Author,
+                    Publisher = BookPropToAdd.Publisher,
+                    Year = BookPropToAdd.Year
                 };
 
                 var bookRestService = new BookRestService();
@@ -211,19 +161,17 @@ namespace ModuleB.ViewModels
         {
             try
             {
-                
-                SelectedBookGrid2 = new BookModel();
-
-                SelectedBookGrid2.Title = Title;
-                SelectedBookGrid2.Author = Author;
-                SelectedBookGrid2.Publisher = Publisher;
-                SelectedBookGrid2.Year = Year;
-          
-
-                var bookRestService = new BookRestService();
-                await bookRestService.UpdateBook(SelectedBookGrid2.Id, SelectedBookGrid2);
-                //bookToEdit = null;
-                GetBooksAction();
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    var bookRestService = new BookRestService();
+                    await bookRestService.UpdateBook(BookPropToUpdate.Id, BookPropToUpdate);
+                    GetBooksAction();
+                }                        
+                else
+                {
+                    System.Windows.MessageBox.Show("Update operation terminated");
+                }
             }
             catch(Exception ex)
             {
@@ -233,11 +181,12 @@ namespace ModuleB.ViewModels
         public void EditBookAction(BookModel SelectedBookGrid)
         {
             try
-            {            
-                Title = SelectedBookGrid.Title;
-                Author = SelectedBookGrid.Author;
-                Publisher = SelectedBookGrid.Publisher;
-                Year = SelectedBookGrid.Year;           
+            {
+                bookPropToUpdate.Id = SelectedBookGrid.Id;
+                bookPropToUpdate.Title = SelectedBookGrid.Title;
+                bookPropToUpdate.Author = SelectedBookGrid.Author;
+                bookPropToUpdate.Publisher = SelectedBookGrid.Publisher;
+                bookPropToUpdate.Year = SelectedBookGrid.Year;           
             }
             catch(Exception ex)
             {
@@ -250,17 +199,26 @@ namespace ModuleB.ViewModels
         private BookModel selectedBookGrid;
 
         public async void DeleteBookAction(BookModel bookToDelete)
-        {
+        {       
             try
             {
-                var bookRestService = new BookRestService();
-                await bookRestService.DeleteBook(bookToDelete.Id);
-                GetBooksAction();
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    var bookRestService = new BookRestService();
+                    await bookRestService.DeleteBook(bookToDelete.Id);
+                    GetBooksAction();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Delete operation terminated");
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: '{ex}'");
             }
+
         }
 
         //PropertyChanged

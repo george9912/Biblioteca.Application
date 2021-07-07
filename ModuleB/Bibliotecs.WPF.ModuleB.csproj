@@ -6,6 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\bookIcon.png" />
+    <None Remove="Views\books.png" />
+    <None Remove="Views\clientIcon.png" />
+    <None Remove="Views\loan.png" />
+    <None Remove="Views\loanIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
   </ItemGroup>
@@ -13,6 +21,14 @@
   <ItemGroup>
     <ProjectReference Include="..\Biblioteca.WPF.API.Client\Biblioteca.WPF.API.Client.csproj" />
     <ProjectReference Include="..\Biblioteca.WPF.Models\Biblioteca.WPF.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\bookIcon.png" />
+    <Resource Include="Views\books.png" />
+    <Resource Include="Views\clientIcon.png" />
+    <Resource Include="Views\loan.png" />
+    <Resource Include="Views\loanIcon.png" />
   </ItemGroup>
 
   <ItemGroup>

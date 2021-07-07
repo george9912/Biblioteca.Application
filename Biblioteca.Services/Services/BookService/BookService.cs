@@ -48,18 +48,16 @@ namespace Biblioteca.Services.Services.BookService
         {
             try
             {
-                var entity = book.ToEntity();
+              
                 var dbEntity = bookRepository.Table.FirstOrDefault(x => x.Id == bookId);
-                if (dbEntity != null)
-                {
-                    dbEntity.Title = book.Title;
-                    dbEntity.Author = book.Author;
-                    dbEntity.Publisher = book.Publisher;
-                    dbEntity.Year = book.Year;
 
-                    bookRepository.Update(dbEntity);
+                if (dbEntity == null)
+                {
+                    throw new ArgumentException("Item can not be found");
                 }
-                // return GetClientByID(clientId);
+                var entity = book.ToEntity();
+                bookRepository.Update(entity);
+                
                 return entity.ToModel();
             }
             catch (Exception e)

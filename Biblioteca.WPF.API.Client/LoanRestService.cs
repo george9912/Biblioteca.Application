@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Biblioteca.WPF.API.Client
 {
+
     public class LoanRestService
     {
         private string baseUrl = "https://localhost:5001/api/Loans";
@@ -49,7 +50,7 @@ namespace Biblioteca.WPF.API.Client
                 var data = new StringContent(JsonConvert.SerializeObject(loan), Encoding.UTF8, "application/json");
 
                 var response = await clientHttp.PostAsync($"{baseUrl}", data);
-
+             
                 var payload = JsonConvert.DeserializeObject<LoanModel>(await response.Content.ReadAsStringAsync());
 
                 return payload;
@@ -63,6 +64,7 @@ namespace Biblioteca.WPF.API.Client
                 var data = new StringContent(JsonConvert.SerializeObject(loan), Encoding.UTF8, "application/json");
 
                 var response = await clientHttp.PutAsync($"{baseUrl}/{loanId}", data);
+                response.Validate();
 
                 var payload = JsonConvert.DeserializeObject<LoanModel>(await response.Content.ReadAsStringAsync());
 

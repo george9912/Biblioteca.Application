@@ -6,16 +6,54 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace ModuleB.ViewModels
 {
     public class ViewCViewModel : BindableBase
     {
         private ObservableCollection<ClientModel> clientsModel = new ObservableCollection<ClientModel>();
-        ClientModel newClientModel = new ClientModel();
+        //ClientModel newClientModel = new ClientModel();
+
+        private ClientModel clientPropToAdd;
+        public ClientModel ClientPropToAdd
+        {
+            get
+            {
+                return clientPropToAdd;
+            }
+            set
+            {
+                if (value != clientPropToAdd)
+                {
+                    clientPropToAdd = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private ClientModel clientPropToUpdate;
+        public ClientModel ClientPropToUpdate
+        {
+            get
+            {
+                return clientPropToUpdate;
+            }
+            set
+            {
+                if (value != clientPropToUpdate)
+                {
+                    clientPropToUpdate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+
         public ViewCViewModel()
         {
-            var customerRestService = new CustomerRestService();
+            clientPropToAdd = new ClientModel();
+            clientPropToUpdate = new ClientModel();
         }
 
         public DelegateCommand GetClients
@@ -34,6 +72,18 @@ namespace ModuleB.ViewModels
             }
         }
 
+        private DelegateCommand<ClientModel> updateClientCommand;
+        public DelegateCommand<ClientModel> UpdateClientCommand =>
+            updateClientCommand ?? (updateClientCommand = new DelegateCommand<ClientModel>(UpdateClientAction));
+
+        private DelegateCommand<ClientModel> editClientCommand;
+        public DelegateCommand<ClientModel> EditClientCommand =>
+            editClientCommand ?? (editClientCommand = new DelegateCommand<ClientModel>(EditClientAction));
+
+        private DelegateCommand<ClientModel> deleteClientCommand;
+        public DelegateCommand<ClientModel> DeleteClientCommand =>
+            deleteClientCommand ?? (deleteClientCommand = new DelegateCommand<ClientModel>(DeleteClientAction));
+
         public ObservableCollection<ClientModel> ClientsModel
         {
             get
@@ -45,6 +95,22 @@ namespace ModuleB.ViewModels
                 if (value != clientsModel)
                 {
                     clientsModel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private ClientModel selectedClientGrid;
+        public ClientModel SelectedClientGrid
+        {
+            get
+            {
+                return selectedClientGrid;
+            }
+            set
+            {
+                if (value != selectedClientGrid)
+                {
+                    selectedClientGrid = value;
                     OnPropertyChanged();
                 }
             }
@@ -72,10 +138,79 @@ namespace ModuleB.ViewModels
         {
             try
             {
+                ClientModel clientToAdd = new ClientModel()
+                {
+                    FirstName = ClientPropToAdd.FirstName,
+                    LastName = ClientPropToAdd.LastName,
+                    Phone = ClientPropToAdd.Phone,
+                    Adress = ClientPropToAdd.Adress
+                };
+
                 var clientRestService = new CustomerRestService();
-                await clientRestService.CreateClient(newClientModel);
-                newClientModel = null;
+                await clientRestService.CreateClient(clientToAdd);
+                clientToAdd = null;
                 GetClientsAction();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: '{ex}'");
+            }
+        }
+
+        public async void UpdateClientAction(ClientModel SelectedClient)
+        {
+            try
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    var clientRestService = new CustomerRestService();
+                    await clientRestService.UpdateClient(ClientPropToUpdate.Id, ClientPropToUpdate);
+
+                    GetClientsAction();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Update operation terminated");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: '{ex}'");
+            }
+        }
+
+        public void EditClientAction(ClientModel SelectedClientGrid)
+        {
+            try
+            {
+                clientPropToUpdate.Id = SelectedClientGrid.Id;
+                clientPropToUpdate.FirstName = SelectedClientGrid.FirstName;
+                clientPropToUpdate.LastName = SelectedClientGrid.LastName;
+                clientPropToUpdate.Phone = SelectedClientGrid.Phone;
+                clientPropToUpdate.Adress = SelectedClientGrid.Adress;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: '{ex}'");
+            }
+        }
+
+        public async void DeleteClientAction(ClientModel clientToDelete)
+        {
+            try
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    var clientRestService = new CustomerRestService();
+                    await clientRestService.DeleteClient(clientToDelete.Id);
+                    GetClientsAction();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Delete operation terminated");
+                }
             }
             catch (Exception ex)
             {

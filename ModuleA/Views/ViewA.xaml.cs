@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace ModuleA.Views
 {
@@ -10,6 +11,15 @@ namespace ModuleA.Views
         public ViewA()
         {
             InitializeComponent();
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            IsEnabled = false;
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            IsEnabled = true;
         }
     }
 }
