@@ -9,7 +9,7 @@ namespace Biblioteca.Services.Models
     {
         public BookModel()
         {
-            //Loan = new HashSet<Loan>();
+            
         }
 
         public string Title { get; set; }

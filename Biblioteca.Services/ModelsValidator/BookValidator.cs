@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Biblioteca.Services.ModelsValidator
 {
-    public class BookValidator : AbstractValidator<BookModel>
+	public class BookValidator : AbstractValidator<BookModel>
 	{
 		public BookValidator()
 		{

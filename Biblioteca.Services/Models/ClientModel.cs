@@ -11,7 +11,7 @@ namespace Biblioteca.Services.Models
     {
         public ClientModel()
         {
-            //Loan = new HashSet<Loan>();
+           
         }
 
         public string LastName { get; set; }
